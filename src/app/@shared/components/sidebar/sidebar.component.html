@@ -1,0 +1,33 @@
+<ul class="sidebar-nav" id="sidebar-nav">
+    <li  class="nav-item">
+      <a href="#" data-toggle="collapse" data-target="#nomenclator" class="nav-link collapsed" >
+        <i class="bi bi-menu-button-wide"></i> <span > Nomenclator </span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul class="nav-content collapse" id="nomenclator">
+        <li>
+          <a >
+            <i class="bi bi-bezier"></i><span routerLink="/portal/nomenclator/list">Registrer</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-target="#persons" data-toggle="collapse" href="#">
+      <i class="bi bi-person-circle"></i><span>Persons</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul class="nav-content collapse" id="persons">
+      <li>
+        <div routerLink="/portal/persons/list">
+          <i class="bi bi-person-fill-add"></i><span>Registrer</span>
+        </div>
+      </li>
+      <li>
+        <div routerLink="/portal/persons/find">
+          <i class="bi bi-person-bounding-box"></i><span>Find</span>
+        </div>
+      </li>
+    </ul>
+  </li><!-- End Forms Nav -->
+
+</ul>

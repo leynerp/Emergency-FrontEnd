@@ -1,0 +1,36 @@
+<mat-dialog-content class="form-group" [formGroup]="loginFormGroup">
+  <div class="login-form align-items-center">
+    <h1><strong>Login</strong></h1>
+    <h3>Hello! Log in with your email.</h3>
+    <div class="row">
+      <mat-form-field class="inputLogin" hintLabel="Max 255 characters" appearance="fill">
+        <mat-label>User name</mat-label>
+        <input matInput #imputname name="userName" id="userName" placeholder="user name" formControlName="userName">
+        <mat-hint align="end">{{imputname.value.length}}/10</mat-hint>
+        <mat-error
+          *ngIf="loginFormGroup.get('userName')?.hasError('minLength') && loginFormGroup.get('userName')?.touched">
+          Please enter a valid name
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="inputLogin" placeholder="Password" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input  matInput  matInput [type]="hide ? 'password' : 'text'" #password maxlength="255" name="password" id="password"
+               formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <mat-error *ngIf="loginInvalid">
+      The username and password were not recognised
+    </mat-error>
+    <div>
+      <button (click)="login()"  class="btn btn-outline-secondary inputLogin" mat-button>Login</button>
+    </div>
+  </div>
+</mat-dialog-content>
+
+
+

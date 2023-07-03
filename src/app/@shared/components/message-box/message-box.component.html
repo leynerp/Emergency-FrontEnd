@@ -1,0 +1,15 @@
+<div class="head-message">
+  <mat-icon *ngIf="messageType===MessageType.Error">error</mat-icon>
+  <mat-icon *ngIf="messageType===MessageType.Question">question_answer</mat-icon>
+  <mat-icon *ngIf="messageType===MessageType.Info">info</mat-icon>
+  <h2 class="mat-dialog-title container-title"> {{title}}</h2>
+  <mat-dialog-content class="container-message">{{ message }}</mat-dialog-content>
+</div>
+
+<mat-dialog-actions *ngIf="buttons === Buttons.Ok" align="center" >
+  <button class="mat-focus-indicator mat-raised-button mat-button-base" (click)="click(Button.Ok)">Ok</button>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="buttons === Buttons.YesNo" align="center">
+  <button class="mat-focus-indicator mat-raised-button mat-button-base" (click)="click(Button.Yes)" tabindex="-1" color="primary">Yes</button>
+  <button class="mat-focus-indicator mat-raised-button mat-button-base" mat-raised-button (click)="click(Button.No)"  color="accent">No</button>
+</mat-dialog-actions>

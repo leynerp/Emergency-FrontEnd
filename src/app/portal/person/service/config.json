@@ -1,0 +1,7 @@
+{
+  "url": {
+    "api": "http://localhost:8080/v1/persons",
+    "update": "es5",
+    "delete": "es5"
+  }
+}
