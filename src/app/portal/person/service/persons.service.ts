@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import {DocumentPerson, Person, PersonAdd, PersonData, PersonListApi} from "./data/persons";
+import {DocumentPerson, Person, PersonAdd, PersonData, PersonListApi, PersonsType} from "./data/persons";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import config from "./config.json";
 import {MessageFormat} from "../../../@shared/components/common";
@@ -14,11 +14,11 @@ export class PersonsService extends PersonData {
     return this._httpClient.get<DocumentPerson[]>(requestUrl);
 
   }
-  getPersons(start:number=0,limit:number=10): Observable<PersonListApi> {
-    const requestUrl = `${config.url.api}/${start}/${limit}`;
+  getPersons(start:number=0,limit:number=10,type:PersonsType): Observable<PersonListApi> {
+    const requestUrl = `${config.url.api}/${type}/${start}/${limit}`;
     return this._httpClient.get<PersonListApi>(requestUrl);
   }
-  insertPerson(newPerson:PersonAdd): Observable<MessageFormat> {
+  insertPerson(newPerson:PersonAdd,type:PersonsType): Observable<MessageFormat> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
     const body=JSON.stringify(newPerson);
     return this._httpClient.post<MessageFormat>(config.url.api,body,{headers});

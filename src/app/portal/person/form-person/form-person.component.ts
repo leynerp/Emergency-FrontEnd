@@ -54,7 +54,7 @@ export class FormPersonComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   savePerson(closeWindows: boolean): void {
-    const arrayDocument: Array<DocumentPersonAdd> = new Array<DocumentPersonAdd>();
+    /*const arrayDocument: Array<DocumentPersonAdd> = new Array<DocumentPersonAdd>();
     arrayDocument.push({
       noIdentity: this.personsForm.value.noIdentity,
       idDocType: this.personsForm.value.typeIdentity,
@@ -63,15 +63,15 @@ export class FormPersonComponent implements OnInit, OnChanges, OnDestroy {
 
     const newPerson: PersonAdd = {
       name: this.personsForm.value.name,
-      firstLastName: this.personsForm.value.firstLastName,
-      secondLastName: this.personsForm.value.secondLastName,
+     // firstLastName: this.personsForm.value.firstLastName,
+     // secondLastName: this.personsForm.value.secondLastName,
       documentIdentity: arrayDocument
     }
     this.$subscription=this.personService.insertPerson(newPerson).subscribe(data=>{
       if (data.status==200)
         this.openMessageBox(Buttons.Ok,'Information','fdfdf');
     })
-    this.personsForm.reset();
+    this.personsForm.reset();*/
   }
 
   test(): void {

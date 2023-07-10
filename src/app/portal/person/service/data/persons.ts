@@ -3,9 +3,21 @@ import {MessageFormat} from "../../../../@shared/components/common";
 export interface Person {
   idPerson:number;
   name: string;
-  firstLastName: string;
-  secondLastName: string;
-  documentIdentity:Array<DocumentPerson>;
+  fLastname: string;
+  secLastname: string;
+  noIdentification:number;
+}
+
+export interface Doctor extends Person{
+  medicalRegistry:string;
+}
+
+export interface Shipper extends Person{
+  registry:string;
+}
+
+export interface Agent extends Person{
+  identificationNumber:string;
 }
 
 export interface PersonListApi{
@@ -16,7 +28,11 @@ export interface PersonListApi{
 export type PersonAdd=Omit<Person, 'idPerson'|'documentIdentity'> & {
   documentIdentity:Array<DocumentPersonAdd>
 }
-
+export enum PersonsType {
+  Doctor='doctor',
+  Agent='agent',
+  Shipper='shipper'
+}
 export interface DocumentPerson {
   noIdentity:String;
   idPersonDocumenttype:number;
@@ -28,10 +44,10 @@ export type DocumentPersonAdd=Omit<DocumentPerson, 'idPersonDocumenttype'|'typeI
 
 
 export abstract class PersonData {
-  abstract getPersons(start:number,limit:number): Observable<PersonListApi>;
+  abstract getPersons(start:number,limit:number,type:PersonsType): Observable<PersonListApi>;
   abstract getDocumentPerson(): Observable<DocumentPerson[]>;
-  abstract insertPerson(newPerson:PersonAdd): Observable<MessageFormat>;
+  abstract insertPerson(newPerson:PersonAdd,type:PersonsType): Observable<MessageFormat>;
   abstract updatePerson(updatePerson:Person): Observable<Person>;
-  abstract deletePerson(id:number): Observable<MessageFormat>;
+  abstract deletePerson(id:number,type:PersonsType): Observable<MessageFormat>;
 
 }

@@ -19,6 +19,8 @@ import {AppPersonDialog} from "./form-person/dialog-persons-component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {TableTitleDirective} from "../../@shared/directives/table-title.directive";
 import {MatIconModule} from "@angular/material/icon";
+import { ManageComponent } from './manage/manage.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -26,24 +28,26 @@ import {MatIconModule} from "@angular/material/icon";
     FindComponent,
     FormPersonComponent,
     AppPersonDialog,
-    TableTitleDirective
+    TableTitleDirective,
+    ManageComponent
   ],
-  imports: [
-    HttpClientModule,
-    CommonModule,
-    PersonRoutingModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatSortModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    NomenclatorModule,
-    MatProgressSpinnerModule,
-    MatIconModule
-  ]
+    imports: [
+        HttpClientModule,
+        CommonModule,
+        PersonRoutingModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatInputModule,
+        MatSortModule,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        NomenclatorModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatTabsModule
+    ]
 })
 export class PersonModule { }
