@@ -21,13 +21,14 @@ export class PersonsService extends PersonData {
     return this._httpClient.post<MessageFormat>(requestUrl,body,{headers});
   }
 
-  updatePerson(updatePerson:Person): Observable<Person> {
+  updatePerson(updatePerson:PersonAdd,type:PersonsType,id:number): Observable<MessageFormat> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
     const body=JSON.stringify(updatePerson);
-    return this._httpClient.put<Person>(config.url.api,body,{headers});
+    const requestUrl = `${config.url.api}/${type}/${id}`;
+    return this._httpClient.patch<MessageFormat>(requestUrl,body,{headers});
   }
-  deletePerson(id:number): Observable<MessageFormat> {
-    const requestUrl = `${config.url.api}/${id}`;
+  deletePerson(id:number,type:PersonsType): Observable<MessageFormat> {
+    const requestUrl = `${config.url.api}/${type}/${id}`;
     return this._httpClient.delete<MessageFormat>(requestUrl);
   }
 

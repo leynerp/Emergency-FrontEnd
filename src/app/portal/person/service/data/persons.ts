@@ -37,7 +37,7 @@ export enum PersonsType {
 export abstract class PersonData {
   abstract getPersons(start:number,limit:number,type:PersonsType): Observable<PersonListApi>;
   abstract insertPerson(newPerson:PersonAdd,type:PersonsType): Observable<MessageFormat>;
-  abstract updatePerson(updatePerson:Person): Observable<Person>;
+  abstract updatePerson(updatePerson:PersonAdd,type:PersonsType,id:number): Observable<MessageFormat>;
   abstract deletePerson(id:number,type:PersonsType): Observable<MessageFormat>;
 
 }

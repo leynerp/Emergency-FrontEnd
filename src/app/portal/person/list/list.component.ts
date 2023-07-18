@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Agent, Doctor, Person, PersonAdd, PersonData, PersonsType, Shipper} from "../service/data/persons";
+import { Person, PersonData, PersonsType} from "../service/data/persons";
 import {MatSort, Sort} from "@angular/material/sort";
 import {ActivatedRoute} from "@angular/router";
 import {AppPersonDialog} from "../form-person/dialog-persons-component";
@@ -19,7 +19,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource: MatTableDataSource<Person>;
   @Input() typePerson!: PersonsType;
   enumPerson=PersonsType;
-  @ViewChild("formPersonComponent") formPersonComponent!: AppPersonDialog;
+  @ViewChild("dialogComponent") dialogComponent!: AppPersonDialog;
   data: Person[] = [];
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -73,7 +73,8 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAddWindows(opt: String, row?: any) {
-    this.formPersonComponent.openDialog(row,this.typePerson);
+    this.dialogComponent.openDialog(opt,row,this.typePerson);
+    this.dialogComponent.getComponentInDialog()?.$action.subscribe(()=>this.findPersonData())
 
   }
 
@@ -110,10 +111,9 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
             if (data.status == 200) {
               let dialog = this.message.show(data.message, 'Information', Buttons.Ok);
               this.isLoadingResults = false;
-              dialog.dialogResult$.subscribe(result => {
-                this.findPersonData();
-                this.clickedRows.delete(deletePerson)
-              });
+              this.findPersonData();
+              this.clickedRows.delete(deletePerson)
+
             } else
               this.message.show('Has been error!!!', 'Error', Buttons.Ok);
           }

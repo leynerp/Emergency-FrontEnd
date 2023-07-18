@@ -8,21 +8,23 @@ import {PersonsType} from "../service/data/persons";
 
 @Component({
   selector: 'app-person-dialog',
-  templateUrl: 'dialog-persons-component.html',
+  template: ``,
   styleUrls: ['./form-person.component.scss']
 })
 export class AppPersonDialog implements OnInit, OnDestroy {
   documentType!: Nomenclator[];
   constructor(private dialog: MatDialog,private activatedRoute:ActivatedRoute) {}
 
-  openDialog(row:any,type:PersonsType) {
+  openDialog(opt:String,row:any,type:PersonsType) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+    dialogConfig.id = 'personDialog';
     let data={
       documentType:this.documentType,
       personSelected:row,
-      type:type
+      type:type,
+      opt:opt
     };
     dialogConfig.data=data;
     this.dialog.open(FormPersonComponent, dialogConfig);
@@ -32,9 +34,11 @@ export class AppPersonDialog implements OnInit, OnDestroy {
       this.documentType=<Nomenclator[]>data['documentType']['data'];
     });
   }
-
   ngOnDestroy(): void {
 
+  }
+  getComponentInDialog():any{
+    return  this.dialog.getDialogById('personDialog')?.componentInstance;
   }
 
 
