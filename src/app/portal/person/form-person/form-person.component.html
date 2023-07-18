@@ -1,10 +1,10 @@
 <div mat-dialog-title class="windos-title">{{title}}</div>
 <mat-dialog-content class="form-group"  [formGroup]="personsForm" >
+  <input type="hidden" #imputidperson name="id_person" id="id_person" placeholder="Name of persons" formControlName="id_person">
   <div class="row">
     <mat-form-field class="col-sm-4" hintLabel="Max 255 characters" appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput #imputname name="name" id="name" placeholder="Name of persons" formControlName="name">
-      <mat-hint align="end">{{imputname.value.length}}/10</mat-hint>
       <mat-error *ngIf="personsForm.get('name')?.hasError('minLength') && personsForm.get('name')?.touched">
         Please enter a valid name
       </mat-error>
@@ -15,34 +15,39 @@
     </mat-form-field>
     <mat-form-field class="col-sm-4" hintLabel="Max 255 characters" appearance="fill">
       <mat-label>First Spell</mat-label>
-      <input matInput #imputfspell maxlength="255" name="firstLastName" placeholder="First spell" formControlName="firstLastName">
-      <mat-hint align="end">{{imputfspell.value.length}}/10</mat-hint>
+      <input matInput #imputfspell maxlength="255" name="f_last_name" placeholder="First spell" formControlName="f_last_name">
     </mat-form-field>
     <mat-form-field class="col-sm-4" hintLabel="Max 255 characters" appearance="fill">
       <mat-label>Second Spell</mat-label>
-      <input matInput #imputsspell  maxlength="255" name="secondLastName" placeholder="Second spell" formControlName="secondLastName">
-      <mat-hint align="end">{{imputsspell.value.length}}/10</mat-hint>
+      <input matInput #imputsspell  maxlength="255" name="s_last_name" placeholder="Second spell" formControlName="s_last_name">
     </mat-form-field>
   </div>
   <div class="row">
-    <mat-form-field class="col-sm-6" appearance="fill">
+    <mat-form-field class="col-sm-4" appearance="fill">
       <mat-label>Select me</mat-label>
-      <mat-select formControlName="typeIdentity">
-        <mat-option *ngFor="let document of documentType" [value]="document.idDocument">
-          {{document.denomination}}
+      <mat-select formControlName="id_document_type">
+        <mat-option *ngFor="let document of documentType" [value]="document.id">
+          {{document.name}}
         </mat-option>
       </mat-select>
       <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
     </mat-form-field>
-    <mat-form-field class="col-sm-6" hintLabel="Max 255 characters" appearance="fill">
+    <mat-form-field class="col-sm-4" hintLabel="Max 255 characters" appearance="fill">
       <mat-label>noIdentity</mat-label>
-      <input matInput #imputnoIdentity  maxlength="255" name="noIdentity" placeholder="Second spell" formControlName="noIdentity">
+      <input matInput #imputnoIdentity  maxlength="255" name="no_identification" placeholder="Second spell" formControlName="no_identification">
       <mat-hint align="end">{{imputnoIdentity.value.length}}/10</mat-hint>
     </mat-form-field>
+
+    <mat-form-field class="col-sm-4" hintLabel="Max 255 characters" appearance="fill">
+      <mat-label>{{getGenericTittle()}}</mat-label>
+      <input matInput #genericField maxlength="255" name="genericField" placeholder="{{getGenericPlaceholder()}}" formControlName="genericField">
+    </mat-form-field>
+
+
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" (click)="test()" mat-dialog-close="true"> Cancel</button>
+  <button mat-raised-button color="primary" (click)="closeWindows()" mat-dialog-close="true"> Cancel</button>
   <button mat-raised-button color="primary"  [disabled]="!personsForm.valid" (click)="savePerson(false)" >Apl</button>
   <button mat-raised-button color="primary" [disabled]="!personsForm.valid" (click)="savePerson(true)" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
 </mat-dialog-actions>

@@ -1,11 +1,21 @@
-import {Component, Inject, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {DocumentPersonAdd, PersonAdd, PersonData} from "../service/data/persons";
-import {DocumentType} from "../../nomenclator/service/data/nomenclator-data";
+import {PersonAdd, PersonData, PersonsType, Shipper} from "../service/data/persons";
+import {Nomenclator} from "../../nomenclator/service/data/nomenclator-data";
 import {Subject, Subscription} from "rxjs";
 import {MessageBox} from "../../../@shared/components/message-box/menssague-box-provider";
-import {Button, Buttons} from "../../../@shared/components/common";
+import {Button, Buttons, MessageType} from "../../../@shared/components/common";
 
 @Component({
   selector: 'app-form-person',
@@ -14,27 +24,38 @@ import {Button, Buttons} from "../../../@shared/components/common";
 })
 export class FormPersonComponent implements OnInit, OnChanges, OnDestroy {
   personsForm!: FormGroup;
+  @Output() personAddEvent=new EventEmitter();
   @ViewChild('formPerson') formPerson: any;
   title: String = "Add persons";
-  name!: String;
-  firstLastName!: String;
-  secondLastName!: String;
-  noIdentity!: String;
-  typeIdentity!: String;
-  documentType: DocumentType[];
+  documentType: Nomenclator[];
+  genericField:any;
+  personsType:PersonsType;
+  rowSelect:any={id_person:'',name:'',registry:'',f_last_name:'',s_last_name:'',no_identification:'',id_document_type:''};
   $subscription!: Subscription;
   $accion!:Subject<String>;
   constructor(private fPersonBuilder: FormBuilder,private mb:MessageBox,private personService:PersonData, private dialogRef: MatDialogRef<FormPersonComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
     this.documentType = data.documentType;
+    this.personsType=data.type;
     if (data.personSelected){
-      this.name=data.personSelected.name;
-      this.firstLastName=data.personSelected.firstLastName;
-      this.secondLastName=data.personSelected.secondLastName;
+      this.rowSelect=data.personSelected;
       this.title='Update person';
     }
-
+    this.genericField=this.createObjectGenericField();
   };
+  createObjectGenericField():Object{
+    if(this.personsType===PersonsType.Shipper) return {title:'Registry number',placeHolder:'Registry number',value:(this.rowSelect.registry)?this.rowSelect.registry:''}
+    return (this.personsType===PersonsType.Doctor) ? {title:'Doctor Registry',placeHolder:'Doctor Registry',value:(this.rowSelect.medical_registry)?this.rowSelect.medical_registry:''}:{title:'Agent Number',placeHolder:'Agent Number',value:(this.rowSelect.agent_number)?this.rowSelect.agent_number:''}
+  }
+  getObjectByType(obj:PersonAdd):PersonAdd {
+    let objField={};
+     if(this.personsType===PersonsType.Shipper) {
+        objField={registry:this.personsForm.controls['genericField'].value};
+     }else
+       objField=(this.personsType===PersonsType.Doctor)?{medical_registry:this.personsForm.controls['genericField'].value} :{agent_number:this.personsForm.controls['genericField'].value};
 
+    return {...obj,...objField} as PersonAdd;
+
+  }
   ngOnChanges(changes: SimpleChanges): void {
   }
 
@@ -43,40 +64,37 @@ export class FormPersonComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   initForm(): FormGroup {
+
     return this.personsForm = this.fPersonBuilder.group({
-      name: [this.name, [Validators.required, Validators.minLength(3), Validators.pattern("^([a-zA-ZáéíóúñÑ ]+ ?[a-zA-ZáéíóúñÑ ]*)+[^;]*$")]],
-      firstLastName: [this.firstLastName, [Validators.required, Validators.minLength(3)]],
-      secondLastName: [this.secondLastName, [Validators.required, Validators.minLength(3)]],
-      noIdentity: ['', [Validators.required]],
-      typeIdentity: ['', [Validators.required]]
+      name: [this.rowSelect.name,[Validators.required, Validators.minLength(3), Validators.pattern("^([a-zA-ZáéíóúñÑ ]+ ?[a-zA-ZáéíóúñÑ ]*)+[^;]*$")]],
+      id_person: [this.rowSelect.id_person,[ Validators.minLength(3)]],
+      f_last_name: [this.rowSelect.f_last_name,[Validators.required, Validators.minLength(3)]],
+      s_last_name: [this.rowSelect.s_last_name,[Validators.required, Validators.minLength(3)]],
+      no_identification: [this.rowSelect.no_identification, [Validators.required]],
+      id_document_type: [this.rowSelect.id_document_type, [Validators.required]],
+      genericField: [this.genericField.value, [Validators.required]]
     });
 
   }
 
   savePerson(closeWindows: boolean): void {
-    /*const arrayDocument: Array<DocumentPersonAdd> = new Array<DocumentPersonAdd>();
-    arrayDocument.push({
-      noIdentity: this.personsForm.value.noIdentity,
-      idDocType: this.personsForm.value.typeIdentity,
-      main: 1
+    const auxPerson={...this.personsForm.value};
+    delete auxPerson.genericField;
+    const personAdd:PersonAdd=this.getObjectByType(auxPerson);
+    this.$subscription=this.personService.insertPerson(personAdd,this.personsType).subscribe({
+      next:(data)=>{
+        this.mb.show(data.message,'Information');
+        this.personAddEvent.emit();
+      },
+      error:(data)=>this.mb.show(data.error.error,data.error.message,undefined,MessageType.Error)
     })
-
-    const newPerson: PersonAdd = {
-      name: this.personsForm.value.name,
-     // firstLastName: this.personsForm.value.firstLastName,
-     // secondLastName: this.personsForm.value.secondLastName,
-      documentIdentity: arrayDocument
-    }
-    this.$subscription=this.personService.insertPerson(newPerson).subscribe(data=>{
-      if (data.status==200)
-        this.openMessageBox(Buttons.Ok,'Information','fdfdf');
-    })
-    this.personsForm.reset();*/
+    this.personsForm.reset();
   }
 
-  test(): void {
-
+  closeWindows(): String {
+     return this.genericField.title;
   }
+
   ngOnDestroy(): void {
      //this.$subscription.unsubscribe();
   }
@@ -88,5 +106,11 @@ export class FormPersonComponent implements OnInit, OnChanges, OnDestroy {
     });
 
   }
+  getGenericTittle():String {
+    return this.genericField.title;
+  }
 
+  getGenericPlaceholder() {
+    return this.genericField.placeHolder;
+  }
 }

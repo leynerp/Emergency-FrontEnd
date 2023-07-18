@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  nomenclatorApi:"http://localhost:8080/v1/nomenclators"
+  nomenclatorApi:"http://localhost:6060/v1/nomenclator"
 };
 
 /*

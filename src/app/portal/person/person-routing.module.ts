@@ -8,9 +8,9 @@ import {ManageComponent} from "./manage/manage.component";
 
 
 const routes: Routes = [
-  { path: 'list',resolve: {documentType:PersonsResolver}, component:ListComponent},
+  //{ path: 'list',resolve: {documentType:PersonsResolver}, component:ListComponent},
   {path: 'find', component:FindComponent},
-  {path: 'manage', component:ManageComponent}];
+  {path: 'manage',resolve: {documentType:PersonsResolver}, component:ManageComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

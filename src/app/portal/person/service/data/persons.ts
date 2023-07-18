@@ -1,15 +1,15 @@
 import { Observable } from 'rxjs';
 import {MessageFormat} from "../../../../@shared/components/common";
 export interface Person {
-  idPerson:number;
+  id_person:number;
   name: string;
-  fLastname: string;
-  secLastname: string;
-  noIdentification:number;
+  f_last_name: string;
+  s_last_name: string;
+  no_identification:number;
 }
 
 export interface Doctor extends Person{
-  medicalRegistry:string;
+  medical_registry:string;
 }
 
 export interface Shipper extends Person{
@@ -17,7 +17,7 @@ export interface Shipper extends Person{
 }
 
 export interface Agent extends Person{
-  identificationNumber:string;
+  agent_number:string;
 }
 
 export interface PersonListApi{
@@ -25,27 +25,17 @@ export interface PersonListApi{
   total_count:number
 }
 
-export type PersonAdd=Omit<Person, 'idPerson'|'documentIdentity'> & {
-  documentIdentity:Array<DocumentPersonAdd>
-}
+export type PersonAdd=Omit<Agent, 'id_person'> | Omit<Shipper, 'id_person'> | Omit<Doctor, 'id_person'>;
+
 export enum PersonsType {
   Doctor='doctor',
   Agent='agent',
   Shipper='shipper'
 }
-export interface DocumentPerson {
-  noIdentity:String;
-  idPersonDocumenttype:number;
-  typeIdentity:String,
-  idDocType:number,
-  main:number
-}
-export type DocumentPersonAdd=Omit<DocumentPerson, 'idPersonDocumenttype'|'typeIdentity'>
 
 
 export abstract class PersonData {
   abstract getPersons(start:number,limit:number,type:PersonsType): Observable<PersonListApi>;
-  abstract getDocumentPerson(): Observable<DocumentPerson[]>;
   abstract insertPerson(newPerson:PersonAdd,type:PersonsType): Observable<MessageFormat>;
   abstract updatePerson(updatePerson:Person): Observable<Person>;
   abstract deletePerson(id:number,type:PersonsType): Observable<MessageFormat>;

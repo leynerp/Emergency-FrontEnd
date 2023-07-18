@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {Agent, Doctor, Person, PersonData, PersonsType, Shipper} from "../service/data/persons";
+import {Agent, Doctor, Person, PersonAdd, PersonData, PersonsType, Shipper} from "../service/data/persons";
 import {MatSort, Sort} from "@angular/material/sort";
 import {ActivatedRoute} from "@angular/router";
 import {AppPersonDialog} from "../form-person/dialog-persons-component";
@@ -15,9 +15,10 @@ import {MessageBox} from "../../../@shared/components/message-box/menssague-box-
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
-  displayedColumns: string[] = ['idPerson', 'name', 'fLastname', 'secLastname', 'noIdentification', 'medicalRegistry', 'registry', 'identificationNumber', 'star'];
+  displayedColumns: string[] = ['idPerson', 'name', 'flastname', 'secLastname', 'noIdentification', 'medicalRegistry', 'registry', 'identificationNumber', 'star'];
   dataSource: MatTableDataSource<Person>;
   @Input() typePerson!: PersonsType;
+  enumPerson=PersonsType;
   @ViewChild("formPersonComponent") formPersonComponent!: AppPersonDialog;
   data: Person[] = [];
   isLoadingResults = true;
@@ -29,7 +30,6 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   tableTitle: any;
-
   constructor(private personService: PersonData, private message: MessageBox, private activatedRoute: ActivatedRoute) {
     this.dataSource = new MatTableDataSource();
   }
@@ -37,7 +37,6 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.paginator.page.subscribe(data => {
-      console.log(data);
       this.findPersonData(data.pageIndex, data.pageSize);
     })
   }
@@ -74,7 +73,8 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAddWindows(opt: String, row?: any) {
-    this.formPersonComponent.openDialog(row);
+    this.formPersonComponent.openDialog(row,this.typePerson);
+
   }
 
   findPersonData(start: number = 0, limit: number = 10) {
@@ -105,7 +105,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
     dialog.dialogResult$.subscribe(result => {
       if (result == Button.Yes) {
         this.isLoadingResults = true;
-        this.deleteSubscription = this.personService.deletePerson(deletePerson.idPerson,this.typePerson).subscribe({
+        this.deleteSubscription = this.personService.deletePerson(deletePerson.id_person,this.typePerson).subscribe({
           next: (data) => {
             if (data.status == 200) {
               let dialog = this.message.show(data.message, 'Information', Buttons.Ok);

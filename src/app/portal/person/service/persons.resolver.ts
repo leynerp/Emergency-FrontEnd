@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, map, Observable, throwError} from 'rxjs';
-import {DocumentType, NomenclatorData} from "../../nomenclator/service/data/nomenclator-data";
+import {Nomenclator, NomenclatorData} from "../../nomenclator/service/data/nomenclator-data";
 import {MessageBox} from "../../../@shared/components/message-box/menssague-box-provider";
 import {MessageType} from "../../../@shared/components/common";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersonsResolver implements Resolve<DocumentType[]> {
+export class PersonsResolver implements Resolve<Nomenclator[]> {
   constructor(private service: NomenclatorData,private menssage:MessageBox,private router: Router) {}
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<DocumentType[]> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Nomenclator[]> | Observable<never> {
    /* return this.service.getAllDocument().pipe(
       take(3),
       mergeMap(res => {
