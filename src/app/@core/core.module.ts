@@ -7,6 +7,8 @@ import {PersonData} from "../portal/person/service/data/persons";
 import {PersonsService} from "../portal/person/service/persons.service";
 import {UserData} from "./data/users";
 import {UserService} from "./mock/users.service";
+import {NomenclatorData} from "../portal/nomenclator/service/data/nomenclator-data";
+import {NomenclatorService} from "../portal/nomenclator/service/nomenclator.service";
 
 const socialLinks = [
   {
@@ -28,6 +30,7 @@ const socialLinks = [
 
 const DATA_SERVICES = [
   { provide: PersonData, useClass:PersonsService },
+  { provide: NomenclatorData, useClass:NomenclatorService},
   { provide: UserData, useClass:UserService }
 
 ];

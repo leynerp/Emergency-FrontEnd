@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {ConfigComponent} from "./config/config.component";
+import {ManageNomComponent} from "./manage-nom/manage-nom.component";
 
 
 
 const routes: Routes = [
-  { path: 'list', component:ConfigComponent},
+  { path: 'list', component:ManageNomComponent},
   ];
 
 @NgModule({

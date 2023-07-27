@@ -17,3 +17,8 @@ export interface MessageFormat {
     status:number;
     message:string;
 }
+export interface ResponseListApi<T>{
+  data:T[],
+  total_count:number
+}
+

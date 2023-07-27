@@ -1,18 +1,18 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Person, PersonAdd, PersonData, PersonListApi, PersonsType} from "./data/persons";
+import {Person, PersonAdd, PersonData, PersonsType} from "./data/persons";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import config from "./config.json";
-import {MessageFormat} from "../../../@shared/components/common";
+import {MessageFormat, ResponseListApi} from "../../../@shared/components/common";
 @Injectable()
 export class PersonsService extends PersonData {
     constructor(private _httpClient: HttpClient) {
     super();
   }
 
-  getPersons(start:number=0,limit:number=10,type:PersonsType): Observable<PersonListApi> {
+  getPersons(start:number=0,limit:number=10,type:PersonsType): Observable<ResponseListApi<Person>> {
     const requestUrl = `${config.url.api}/${type}/${start}/${limit}`;
-    return this._httpClient.get<PersonListApi>(requestUrl);
+    return this._httpClient.get<ResponseListApi<Person>>(requestUrl);
   }
   insertPerson(newPerson:PersonAdd,type:PersonsType): Observable<MessageFormat> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'});

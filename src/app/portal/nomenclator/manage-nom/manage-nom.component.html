@@ -1,0 +1,10 @@
+<mat-tab-group animationDuration="0ms" >
+  <mat-tab class="tab-icon" *ngFor="let nomenclator of config | keyvalue">
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">{{nomenclator.value.icon}}</mat-icon>
+      {{nomenclator.value.name}}
+    </ng-template>
+    <app-list-nomenclator [reference]="nomenclator.value.ref " [name]="nomenclator.value.name"></app-list-nomenclator>
+  </mat-tab>
+</mat-tab-group>
+

@@ -12,7 +12,7 @@ import {MessageBox} from "../../../@shared/components/message-box/menssague-box-
 @Component({
   selector: 'persons-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['../../../@shared/styles/listComponent.scss']
 })
 export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns: string[] = ['idPerson', 'name', 'flastname', 'secLastname', 'noIdentification', 'medicalRegistry', 'registry', 'identificationNumber', 'star'];
@@ -30,7 +30,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   tableTitle: any;
-  constructor(private personService: PersonData, private message: MessageBox, private activatedRoute: ActivatedRoute) {
+  constructor(private personService: PersonData, private message: MessageBox) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -73,7 +73,10 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAddWindows(opt: String, row?: any) {
-    this.dialogComponent.openDialog(opt,row,this.typePerson);
+    const rowSelected=(row) ? row :Array.from(this.clickedRows.values()).reduce((acc, item) => {
+        return item;
+      }, {});
+    this.dialogComponent.openDialog(opt,rowSelected,this.typePerson);
     this.dialogComponent.getComponentInDialog()?.$action.subscribe(()=>this.findPersonData())
 
   }

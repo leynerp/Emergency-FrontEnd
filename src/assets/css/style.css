@@ -1292,3 +1292,7 @@ log-bar{
   list-style: none;
   display: inline-flex;
 }
+
+.tab-icon {
+  margin-right: 8px;
+}

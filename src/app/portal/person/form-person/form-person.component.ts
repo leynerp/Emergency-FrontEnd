@@ -42,7 +42,6 @@ export class FormPersonComponent implements OnInit, OnDestroy {
   };
   $subscription!: Subscription;
   $action: Subject<String> = new Subject<String>();
-
   constructor(private fPersonBuilder: FormBuilder, private mb: MessageBox, private personService: PersonData, private dialogRef: MatDialogRef<FormPersonComponent>, @Inject(MAT_DIALOG_DATA) data: any) {
     this.documentType = data.documentType;
     this.personsType = data.type;
