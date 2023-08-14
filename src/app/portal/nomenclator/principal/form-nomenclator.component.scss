@@ -1,0 +1,11 @@
+.win-nomenclator{
+  display: flex;
+  flex-flow: column wrap;
+}
+.item-modal{
+  width: 450px;
+}
+.resizing{
+  resize: none;
+  height: 110px;
+}

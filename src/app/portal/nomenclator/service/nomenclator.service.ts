@@ -19,8 +19,8 @@ export class NomenclatorService extends NomenclatorData {
     const index = Object.keys(NomenclatorsType).indexOf(ref);
     return Object.values(NomenclatorsType)[index];
 }
-  getData(): Observable<ResponseListApi<Nomenclator>> {
-    const requestUrl = `${this.API}/${this.reference.toString()}/${0}/${10}`;
+  getData(start:number, limit:number): Observable<ResponseListApi<Nomenclator>> {
+    const requestUrl = `${this.API}/${this.reference.toString()}/${start}/${limit}`;
     return this._httpClient.get<ResponseListApi<Nomenclator>>(requestUrl);
   }
   insertData(data: Nomenclator): Observable<MessageFormat> {

@@ -1,0 +1,24 @@
+<mat-tab-group animationDuration="0ms">
+  <mat-tab >
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">local_hospital</mat-icon>
+      Doctor
+    </ng-template>
+    <persons-list [typePerson]="personType.Doctor"></persons-list>
+  </mat-tab>
+  <mat-tab >
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">person_pin</mat-icon>
+      Shipper
+    </ng-template>
+    <persons-list [typePerson]="personType.Shipper"></persons-list>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">person_outline</mat-icon>
+      Agent
+    </ng-template>
+    <persons-list [typePerson]="personType.Agent"></persons-list>
+  </mat-tab>
+</mat-tab-group>
+

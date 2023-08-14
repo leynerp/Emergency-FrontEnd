@@ -19,6 +19,11 @@ th.mat-header-cell#final{
   font-weight: bold;
 }
 
+.row-is-disabled {
+  background-color: #FFEEEE;
+  color:#FF0000 !important;
+}
+
 section {
   display: table;
 }

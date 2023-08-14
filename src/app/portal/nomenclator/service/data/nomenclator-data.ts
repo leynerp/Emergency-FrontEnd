@@ -3,7 +3,7 @@ import {MessageFormat, ResponseListApi} from "../../../../@shared/components/com
 
 export interface Nomenclator {
   id: number;
-  denomination: string;
+  name: string;
   description: string;
   active: number;
 
@@ -11,7 +11,7 @@ export interface Nomenclator {
 
 export enum NomenclatorsType {
   DOCUMENT_TYPE='d_type',
-  TYPE_SERVICE='t_service',
+  TYPE_SERVICE='s_type',
   HEALT_UNIT='h_unit',
   MOVIL_TYPE='m_type'
 }
@@ -25,7 +25,7 @@ export interface ConfigStructure {
 }
 
 export abstract class NomenclatorData {
-  abstract getData(): Observable<ResponseListApi<Nomenclator>>;
+  abstract getData(start:number, limit:number): Observable<ResponseListApi<Nomenclator>>;
   abstract getDataByRef(ref:NomenclatorsType): Observable<ResponseListApi<Nomenclator>>;
   abstract insertData(data:Nomenclator): Observable<MessageFormat>;
   abstract updateData(dataUpdate:Nomenclator): Observable<MessageFormat>;
