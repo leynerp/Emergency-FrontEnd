@@ -1,0 +1,92 @@
+table {
+  width: 100%;
+  height: 100%;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+th.mat-header-cell#final{
+  width: 80px;
+}
+.mat-row:hover .mat-cell {
+  background-color: #e0f8e9;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 18px;
+  margin-left: 8px;
+  min-width: 120px;
+  padding-bottom: 15px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 900px;
+}
+
+.example-button-row:hover .mat-raised-button{
+  background-color: #4154F2;
+}
+
+.example-button-row button{
+  margin: 0px 2px;
+  padding: 0px 0px;
+  height: 30px;
+}
+
+.example-container {
+  position: relative;
+}
+
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+td.mat-column-star {
+  width: 20px;
+  display: inline;
+  padding-right: 8px;
+}
+

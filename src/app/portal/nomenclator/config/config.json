@@ -1,0 +1,22 @@
+{
+  "dtype": {
+    "name": "Document type",
+    "ref": "DOCUMENT_TYPE",
+    "icon": "document_scanner"
+  },
+  "hunit": {
+    "name": "Healt Unit",
+    "ref": "HEALT_UNIT",
+    "icon": "medication"
+  },
+  "mtype": {
+  "name": "Movil type",
+  "ref": "MOVIL_TYPE",
+  "icon": "commute"
+},
+  "stype": {
+  "name": "Service type",
+  "ref": "TYPE_SERVICE",
+  "icon": "build"
+}
+}
