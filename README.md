@@ -1,6 +1,12 @@
+<<<<<<< HEAD
+# Emergency
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.9.
+=======
 # Incidence
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.5.
+>>>>>>> 68a53a9f67b65c21fe41659142d9114b18e6792f
 
 ## Development server
 
